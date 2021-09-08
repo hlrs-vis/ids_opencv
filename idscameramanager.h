@@ -35,6 +35,7 @@ public:
     bool isRunning();
     int getHeight();
     int getWidth();
+    unsigned int frameCounter();
 
 private:
     std::shared_ptr<peak::core::Device> m_device;

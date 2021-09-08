@@ -259,3 +259,8 @@ int IdsCameraManager::getWidth()
 {
     return m_acquisitionWorker->m_imageWidth;
 }
+
+unsigned int  IdsCameraManager::frameCounter()
+{
+    return m_acquisitionWorker->m_frameCounter;
+}
