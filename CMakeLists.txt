@@ -72,10 +72,6 @@ target_link_libraries (${SAMPLE_TARGET_NAME}
 
 target_link_libraries (test
     ids_opencv_worker
-    #ids_peak
-    #ids_peak_ipl
-    #${CMAKE_THREAD_LIBS_INIT}
-    #${OpenCV_LIBS}
     )   
 
 
