@@ -120,3 +120,8 @@ void AcquisitionWorker::SetDataStream(std::shared_ptr<peak::core::DataStream> da
     m_imageHeight = static_cast<int>(
         m_nodemapRemoteDevice->FindNode<peak::core::nodes::IntegerNode>("Height")->Value());
 }
+
+bool AcquisitionWorker::isRunning()
+{
+    return m_running;
+}

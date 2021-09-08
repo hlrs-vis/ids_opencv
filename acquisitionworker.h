@@ -46,6 +46,7 @@ public:
     void Stop();
     void SetDataStream(std::shared_ptr<peak::core::DataStream> dataStream);
     cv::Mat GetFrame();
+    bool isRunning();
 
 private:
     std::shared_ptr<peak::core::DataStream> m_dataStream;

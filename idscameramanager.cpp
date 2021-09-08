@@ -244,3 +244,8 @@ cv::Mat IdsCameraManager::getFrame()
 {
     return m_acquisitionWorker->GetFrame();
 }
+
+bool IdsCameraManager::isRunning()
+{
+    return m_acquisitionWorker->isRunning();
+}
