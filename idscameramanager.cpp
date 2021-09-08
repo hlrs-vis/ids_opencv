@@ -249,3 +249,13 @@ bool IdsCameraManager::isRunning()
 {
     return m_acquisitionWorker->isRunning();
 }
+
+int IdsCameraManager::getHeight()
+{
+    return m_acquisitionWorker->m_imageHeight;
+}
+
+int IdsCameraManager::getWidth()
+{
+    return m_acquisitionWorker->m_imageWidth;
+}

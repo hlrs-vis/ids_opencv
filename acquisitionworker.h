@@ -36,8 +36,12 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
+class IdsCameraManager;
+
 class AcquisitionWorker
 {
+
+friend class IdsCameraManager;
 
 public:
     AcquisitionWorker();

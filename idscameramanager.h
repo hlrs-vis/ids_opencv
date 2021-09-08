@@ -33,6 +33,8 @@ public:
     ~IdsCameraManager();
     cv::Mat getFrame();
     bool isRunning();
+    int getHeight();
+    int getWidth();
 
 private:
     std::shared_ptr<peak::core::Device> m_device;
