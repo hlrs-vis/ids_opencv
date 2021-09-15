@@ -75,10 +75,6 @@ cv::Mat AcquisitionWorker::GetFrame()
             //QImage qImage(m_imageWidth, m_imageHeight, QImage::Format_RGB32);
             cv::Mat cvImage(m_imageHeight, m_imageWidth, CV_8UC3);
 
-            // Create IDS peak IPL image for debayering and convert it to RGBa8 format
-            //const auto image = peak::BufferTo<peak::ipl::Image>(buffer).ConvertTo(
-            //    peak::ipl::PixelFormatName::BGRa8, qImage.bits(), static_cast<size_t>(qImage.byteCount()));
-
             // OpenCV Image
             size_t imageSize = cvImage.total() * cvImage.elemSize();
             const auto image = peak::BufferTo<peak::ipl::Image>(buffer).ConvertTo(
