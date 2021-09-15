@@ -7,6 +7,8 @@ message (STATUS "[${PROJECT_NAME}] Processing ${CMAKE_CURRENT_LIST_FILE}")
 set (SAMPLE_TARGET_NAME ${PROJECT_NAME})
 set (CMAKE_SCRIPTS_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../_cmake_scripts" CACHE STRING "The path of the cmake scripts directory.")
 set (SAMPLE_OUTPUT_PATH "${CMAKE_BINARY_DIR}")
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include (${CMAKE_SCRIPTS_PATH}/cmake_detect_architecture.cmake)
 detect_target_architecture (ARCH)
@@ -108,7 +110,7 @@ if (CMAKE_CONFIGURATION_TYPES)
 endif ()
 
 set_target_properties(${SAMPLE_TARGET_NAME} PROPERTIES
-    CXX_STANDARD 14
+    CXX_STANDARD 17
     CXX_STANDARD_REQUIRED ON
     CXX_EXTENSIONS NO
 )
