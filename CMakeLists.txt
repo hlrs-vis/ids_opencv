@@ -18,7 +18,7 @@ if (MSVC)
 endif ()
 
 add_library (${SAMPLE_TARGET_NAME} ${SAMPLE_TARGET_DEFINITION_ADDENDUM}
-    main.cpp
+    # main.cpp
     idscameramanager.cpp
     acquisitionworker.cpp
     idscameramanager.h
