@@ -28,6 +28,8 @@
 
 class IdsCameraManager{
 
+    enum autoExposure {Off, Once, Continuous};
+
 public:
     explicit IdsCameraManager();
     ~IdsCameraManager();
@@ -36,6 +38,9 @@ public:
     int getHeight();
     int getWidth();
     unsigned int frameCounter();
+    void setFrameRate(double framerate);
+    double getFrameRate();
+    void setAutoExposure(autoExposure mode);
 
 private:
     std::shared_ptr<peak::core::Device> m_device;
@@ -51,6 +56,7 @@ private:
     void CloseDevice();
     
     void onCounterUpdated(unsigned int frameCounter, unsigned int errorCounter);
+
 
 };
 

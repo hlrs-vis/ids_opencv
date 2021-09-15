@@ -30,6 +30,7 @@
 #include <peak/peak.hpp>
 
 #include <cstdint>
+#include <algorithm>
 
 #define VERSION "1.1.1"
 
@@ -156,6 +157,15 @@ bool IdsCameraManager::OpenDevice()
                 // UserSet is not available
             }
 
+            try
+            {
+                m_nodemapRemoteDevice->FindNode<peak::core::nodes::EnumerationNode>("ExposureAuto")->SetCurrentEntry("Continuous");
+            }
+            catch (const std::exception& e)
+            {
+
+            }
+
             // Get the payload size for correct buffer allocation
             auto payloadSize = m_nodemapRemoteDevice->FindNode<peak::core::nodes::IntegerNode>("PayloadSize")
                                    ->Value();
@@ -260,7 +270,78 @@ int IdsCameraManager::getWidth()
     return m_acquisitionWorker->m_imageWidth;
 }
 
+
 unsigned int  IdsCameraManager::frameCounter()
 {
     return m_acquisitionWorker->m_frameCounter;
+}
+
+void IdsCameraManager::setFrameRate(double framerate)
+{
+    try
+    {
+        double minFrameRate = 0;
+        double maxFrameRate = 0;
+        //double incFrameRate = 0;
+
+        // Get frame rate range. All values in fps.
+        minFrameRate = m_nodemapRemoteDevice->FindNode<peak::core::nodes::FloatNode>("AcquisitionFrameRate")->Minimum();
+        maxFrameRate = m_nodemapRemoteDevice->FindNode<peak::core::nodes::FloatNode>("AcquisitionFrameRate")->Maximum();
+
+        /*if (m_nodemapRemoteDevice->FindNode<peak::core::nodes::FloatNode>("AcquisitionFrameRate")->HasConstantIncrement())
+        {
+            incFrameRate = m_nodemapRemoteDevice->FindNode<peak::core::nodes::FloatNode>("AcquisitionFrameRate")->Increment();
+        }
+        else
+        {
+            // If there is no increment, it might be useful to choose a suitable increment for a GUI control element (e.g. a slider)
+            incFrameRate = 0.1;
+        }*/
+
+        // Get the current frame rate
+        //double frameRate = m_nodemapRemoteDevice->FindNode<peak::core::nodes::FloatNode>("AcquisitionFrameRate")->Value();
+
+        framerate = std::clamp(framerate,minFrameRate,maxFrameRate);
+
+        // Set frame rate to desired value
+        m_nodemapRemoteDevice->FindNode<peak::core::nodes::FloatNode>("AcquisitionFrameRate")->SetValue(framerate);
+    }
+    catch (const std::exception& e)
+    {
+        std::string strError = e.what();
+        // ...
+    }
+}
+
+double IdsCameraManager::getFrameRate()
+{
+    try
+    {
+        // Get the current frame rate
+        double frameRate = m_nodemapRemoteDevice->FindNode<peak::core::nodes::FloatNode>("AcquisitionFrameRate")->Value();
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+}
+
+
+void IdsCameraManager::setAutoExposure(autoExposure mode)
+{
+switch(mode)
+{
+    case Off:
+        // Disable ExposureAuto mode
+        m_nodemapRemoteDevice->FindNode<peak::core::nodes::EnumerationNode>("ExposureAuto")->SetCurrentEntry("Off");
+        break;
+    case Once:
+        // Enable one time exposure auto mode
+        m_nodemapRemoteDevice->FindNode<peak::core::nodes::EnumerationNode>("ExposureAuto")->SetCurrentEntry("Once");
+        break;
+    case Continuous:
+        // Enable continuous exposure auto mode
+        m_nodemapRemoteDevice->FindNode<peak::core::nodes::EnumerationNode>("ExposureAuto")->SetCurrentEntry("Continuous");
+        break;
+}
 }
