@@ -31,12 +31,13 @@
 int main(int argc, char* argv[])
 {    
     IdsCameraManager w;
-
+    w.setFrameRate(60);
     if (w.isRunning())
     {
     cv::String outFileName = "test" + std::to_string(0);
     outFileName.append(".jpg");
     cv::imwrite(outFileName,w.getFrame());
+    //cv::Mat img = w.getFrame();
     }
 
     return 0;
