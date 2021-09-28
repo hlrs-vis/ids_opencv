@@ -33,6 +33,8 @@
 
 #include <cmath>
 #include <cstring>
+#include <chrono>
+#include <ctime>
 
 
 
@@ -65,8 +67,12 @@ void AcquisitionWorker::Start()
 
 cv::Mat AcquisitionWorker::GetFrame()
 {
+    /*std::clock_t c_start = std::clock();
+    auto t_start = std::chrono::high_resolution_clock::now();
+    */
     if (m_running)
     {
+
         try
         {
             // Get buffer from device's datastream
@@ -77,10 +83,11 @@ cv::Mat AcquisitionWorker::GetFrame()
 
             // OpenCV Image
             size_t imageSize = cvImage.total() * cvImage.elemSize();
-            const auto image = peak::BufferTo<peak::ipl::Image>(buffer).ConvertTo(
+            //const auto image = 
+            peak::BufferTo<peak::ipl::Image>(buffer).ConvertTo(
                 peak::ipl::PixelFormatName::BGR8, cvImage.data, cvImage.total() * cvImage.elemSize());
             
-            cv::Mat cvImage2 = cvImage.clone();
+            //cv::Mat cvImage2 = cvImage.clone();
 
 
             // Queue buffer so that it can be used again
@@ -90,7 +97,16 @@ cv::Mat AcquisitionWorker::GetFrame()
             // emit imageReceived(qImage);
 
             m_frameCounter++;
-            return cvImage2;
+            /*
+            std::clock_t c_end = std::clock();
+            auto t_end = std::chrono::high_resolution_clock::now();
+ 
+            std::cout << std::fixed << std::setprecision(2) << "CPU time used: "
+                        << 1000.0 * (c_end - c_start) / CLOCKS_PER_SEC << " ms\n"
+                        << "Wall clock time passed: "
+                        << std::chrono::duration<double, std::milli>(t_end-t_start).count()
+                        << " ms\n";*/
+            return cvImage;
         }
         catch (const std::exception& e)
         {
@@ -99,6 +115,7 @@ cv::Mat AcquisitionWorker::GetFrame()
             //qDebug() << "Exception: " << e.what();
         }
     }
+
 }
 
 void AcquisitionWorker::Stop()
