@@ -319,6 +319,7 @@ double IdsCameraManager::getFrameRate()
     {
         // Get the current frame rate
         double frameRate = m_nodemapRemoteDevice->FindNode<peak::core::nodes::FloatNode>("AcquisitionFrameRate")->Value();
+	return frameRate;
     }
     catch(const std::exception& e)
     {
